@@ -1,0 +1,55 @@
+# 02_analysis_sample.R
+# Restricts the person-year data to respondents who report a credit score band
+# and builds the variables used in the tables and regressions.
+#
+# Input:  data/derived/sce_person_year.rds
+# Output: data/derived/analysis_sample.rds
+
+library(dplyr)
+
+source("code/00_config.R")
+
+person_year <- readRDS(file.path(DIR_DERIVED, "sce_person_year.rds"))
+
+# The credit score question was added to the module in February 2014. Band 6 is
+# "don't know".
+sample <- person_year %>%
+  filter(!is.na(credit_score_band), credit_score_band < 6)
+
+sample <- sample %>%
+  mutate(
+    female = case_when(gender == 1 ~ 1, gender == 2 ~ 0),
+    hispanic = case_when(hispanic == 1 ~ 1, hispanic == 2 ~ 0),
+    partner  = case_when(partner == 1 ~ 1, partner == 2 ~ 0),
+    owner    = case_when(home_tenure == 1 ~ 1, home_tenure == 2 ~ 0),   # "other" left missing
+
+    # Children living in the household. The main definition is children under 18;
+    # the wider one adds those aged 18 to 24.
+    child_under18 = as.integer(n_children_0_5 >= 1 | n_children_6_17 >= 1),
+    child_under6  = as.integer(n_children_0_5 >= 1),
+    child_under25 = as.integer(n_children_0_5 >= 1 | n_children_6_17 >= 1 | n_children_18_24 >= 1),
+    n_children_under18 = rowSums(across(c(n_children_0_5, n_children_6_17)), na.rm = TRUE),
+
+    # Graduate degrees pooled; "other" left missing.
+    education = case_when(education %in% 1:5 ~ as.integer(education),
+                          education %in% 6:8 ~ 6L),
+    education = factor(education, levels = 1:6,
+                       labels = c("Less than high school", "High school", "Some college",
+                                  "Associate degree", "Bachelor's degree", "Graduate degree")),
+
+    # Employment situation allows several answers; assign one status in this order.
+    employment = case_when(if_all(starts_with("emp_"), is.na) ~ NA_character_,
+                           emp_full_time == 1 ~ "Full time",
+                           emp_part_time == 1 ~ "Part time",
+                           emp_retired   == 1 ~ "Retired",
+                           emp_looking == 1 | emp_laid_off == 1 ~ "Unemployed",
+                           TRUE ~ "Out of the labor force"),
+    employment = relevel(factor(employment), ref = "Full time")
+  )
+
+# A respondent can be in the sample in two consecutive calendar years.
+cat("Observations:", nrow(sample), "\n")
+cat("Respondents: ", n_distinct(sample$userid), "\n")
+print(table(year = sample$year))
+
+saveRDS(sample, file.path(DIR_DERIVED, "analysis_sample.rds"))
