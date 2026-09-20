@@ -18,28 +18,41 @@ The unit of observation is a person-year. The analysis sample has 11,393 observa
 
 Among women with children under 18 at home, 22% report a score below 620 and 28% a score above 760. Among men with children the shares are 7% and 51%.
 
-The table reports OLS regressions of the score band (1 to 5) on gender, children under 18, living with a spouse or partner, and their interactions. Columns 5 and 6 add age, education, employment status, homeownership, race and ethnicity, and state and year fixed effects; column 6 widens the definition of children to those under 25. Standard errors are clustered by respondent.
+Everything below is weighted with the survey weight of the credit module and clustered by respondent. The weights matter little: the gender gap is 0.169 of a band weighted and 0.180 unweighted, so the result is not an artifact of who answers the survey.
 
-|   | (1) | (2) | (3) | (4) | (5) | (6) |
-|:---|---:|---:|---:|---:|---:|---:|
-| Children | -0.330*** (0.033) | -0.073* (0.042) | -0.308*** (0.039) | -0.735*** (0.090) | -0.413*** (0.084) | -0.436*** (0.076) |
-| Female | -0.510*** (0.030) | -0.354*** (0.035) | -0.167*** (0.034) | -0.087 (0.053) | -0.063 (0.048) | -0.037 (0.048) |
-| Children x Female |    | -0.516*** (0.066) | -0.415*** (0.060) | -0.279*** (0.065) | -0.251*** (0.060) | -0.209*** (0.058) |
-| Children x Partner |    |    |    | 0.461*** (0.086) | 0.300*** (0.078) | 0.289*** (0.070) |
-| Female x Partner |    |    |    | -0.174*** (0.065) | -0.040 (0.060) | -0.065 (0.060) |
-| Partner |    |    |    | -0.017 (0.048) | -0.151*** (0.045) | -0.150*** (0.045) |
-| Household income bracket |    |    | 0.193*** (0.005) | 0.194*** (0.006) | 0.131*** (0.007) | 0.134*** (0.007) |
-| Controls, state and year FE | No | No | No | No | Yes | Yes |
-| Observations | 11,389 | 11,389 | 11,325 | 11,324 | 11,107 | 11,107 |
-| R2 | 0.050 | 0.057 | 0.192 | 0.195 | 0.334 | 0.336 |
+### The hypothesis the project started from
 
-Women report scores about half a band lower than men. Household income accounts for roughly a third of that gap, and with the full set of controls it falls to 0.18 of a band ([reg_gender_gap](output/tables/reg_gender_gap.md)). The gap is concentrated among mothers: in column 2, having children at home is associated with a score 0.07 of a band lower for men and 0.59 lower for women, and the interaction remains at a quarter of a band with all controls. Living with a partner offsets part of the difference for parents of either gender. The other tables split the sample by gender ([reg_by_gender](output/tables/reg_by_gender.md)) and look at race ([reg_race](output/tables/reg_race.md)): Black respondents report scores between 0.6 and 0.95 of a band lower than the rest, depending on the controls, with a further, less precisely estimated, difference for Black women.
+A mother raising children on her own should report a lower score than a father doing the same, and a partner should soften the difference. Gender and partnership are crossed into one variable so that each family type is measured against the same reference, respondents without children, and the comparison that matters is a difference between two coefficients rather than a sum of three.
 
-These are associations. The score is self-reported in bands, household composition is measured at the first interview, the regressions are unweighted, and fertility and partnership are choices correlated with many things that also move credit histories.
+| Against respondents without children | Raw | + income | + controls | + state and year |
+|:---|---:|---:|---:|---:|
+| Father, partnered | 0.073 (0.061) | -0.313*** (0.056) | -0.136*** (0.053) | -0.139*** (0.052) |
+| Father, alone | -0.577** (0.252) | -0.491** (0.216) | -0.231 (0.194) | -0.201 (0.178) |
+| Mother, partnered | -0.746*** (0.072) | -0.896*** (0.058) | -0.522*** (0.058) | -0.515*** (0.057) |
+| Mother, alone | -1.58*** (0.092) | -1.12*** (0.089) | -0.580*** (0.079) | -0.574*** (0.077) |
+| Observations | 11,387 | 11,323 | 11,117 | 11,106 |
+
+In the full specification a mother raising children alone reports **0.373 of a band less than a father in the same situation** (standard error 0.189, p = 0.049). Fathers raising children alone are not distinguishable from people without children once income, homeownership and the rest are held fixed; mothers are, whether they have a partner or not.
+
+The second half of the hypothesis does not survive the controls. Raw, a partner is worth most of a band to a mother, 1.58 against 0.746. With income and homeownership in the regression the two are almost the same, 0.574 against 0.515. What looked like the effect of having a partner is mostly the income and the home that come with one.
+
+An ordered logit, which estimates the cut points instead of assuming the bands are equally spaced, gives the same ordering: mother alone -1.464, mother partnered -1.229, father alone -0.656, father partnered -0.466 ([reg_ordered_logit](output/tables/reg_ordered_logit.md)).
+
+### What does not matter
+
+Among parents, neither the number of children nor the age of the youngest moves the score. A second child is worth -0.008 of a band (standard error 0.034) and having the youngest under six is worth 0.039 (0.093), both indistinguishable from zero, and neither interacts with gender ([reg_children_dose](output/tables/reg_children_dose.md)). The penalty attaches to being a mother, not to how many children there are or how much care they currently need. Among parents alone the gender gap is 0.39 of a band, larger than in the full sample.
+
+### Race
+
+Black respondents report scores between 0.6 and 0.95 of a band lower than the rest, depending on the controls, with a further and less precisely estimated difference for Black women ([reg_race](output/tables/reg_race.md)).
+
+### How to read all of this
+
+These are associations. The score is self-reported in bands, household composition is measured at each respondent's first interview and carried forward, and fertility and partnership are choices correlated with many things that also move credit histories. Nothing here identifies the effect of having a child.
 
 ## Next steps
 
-- Ordered-response models and survey weights.
+- Survey-design standard errors: the weights are used but the panel structure is handled by clustering, not by the survey design.
 - The Medicaid expansion of 2014 as a source of variation in the financial cost of health shocks: compare the gaps in expansion and non-expansion states before and after (the state identifier is already in the sample).
 - The Household Spending module of the SCE, to look at medical and education spending by family type.
 
@@ -51,13 +64,13 @@ code/
   01_build_sample.R      raw files -> one record per person and year
   02_analysis_sample.R   sample restriction and variable construction
   03_descriptives.R      summary table and figure
-  04_regressions.R       regression tables (markdown and LaTeX)
+  04_regressions.R       regression tables (markdown and LaTeX), weighted
   utils.R                table helpers
 data/README.md           how to obtain the microdata
 docs/project_outline.md  motivation, hypotheses, literature
 output/                  tables and figures produced by the code
 ```
 
-The code runs in R 4.5 with `dplyr`, `tidyr`, `readxl`, `ggplot2` and `fixest`. Put the three raw files in `data/raw` (or point `SCE_DATA_DIR` to them) and run the scripts in order from the repository root.
+The code runs in R 4.5 with `dplyr`, `tidyr`, `readxl`, `ggplot2`, `fixest`, `MASS` and `sandwich`. Put the three raw files in `data/raw` (or point `SCE_DATA_DIR` to them) and run the scripts in order from the repository root.
 
 María Luján Puchot

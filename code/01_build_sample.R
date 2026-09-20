@@ -56,6 +56,7 @@ credit_year <- credit %>%
   last_of_year() %>%
   select(userid, year,
          month_credit       = month,
+         weight_credit      = weight,   # survey weight of the credit module, the one this sample is defined by
          credit_score_band  = N22,   # 1 below 620 ... 5 above 760, 6 don't know
          score_last_checked = N23,
          late_30_days       = N15,

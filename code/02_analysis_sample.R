@@ -30,6 +30,27 @@ sample <- sample %>%
     child_under25 = as.integer(n_children_0_5 >= 1 | n_children_6_17 >= 1 | n_children_18_24 >= 1),
     n_children_under18 = rowSums(across(c(n_children_0_5, n_children_6_17)), na.rm = TRUE),
 
+    # The youngest child is what decides how much care the household absorbs, so
+    # a parent of a toddler and a parent of a teenager are kept apart.
+    youngest_under6 = if_else(child_under18 == 0, NA_integer_, as.integer(n_children_0_5 >= 1)),
+
+    # The hypothesis the project started from is about single mothers, which
+    # needs gender and partnership crossed rather than added. Respondents
+    # without children are the reference category.
+    family_type = case_when(
+      is.na(female) | is.na(child_under18) | is.na(partner) ~ NA_character_,
+      child_under18 == 0                    ~ "No children",
+      female == 0 & partner == 1            ~ "Father, partnered",
+      female == 0 & partner == 0            ~ "Father, alone",
+      female == 1 & partner == 1            ~ "Mother, partnered",
+      female == 1 & partner == 0            ~ "Mother, alone"
+    ),
+    family_type = relevel(factor(family_type), ref = "No children"),
+
+    # Survey weight. The sample is defined by answering the credit module, so
+    # that module's weight is the one that makes it representative.
+    w = weight_credit,
+
     # Graduate degrees pooled; "other" left missing.
     education = case_when(education %in% 1:5 ~ as.integer(education),
                           education %in% 6:8 ~ 6L),
