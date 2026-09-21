@@ -1,8 +1,8 @@
 # Credit scores, gender and motherhood
 
-Mothers raising children alone report lower credit scores than fathers in the same situation, and the gap is not in their payment record. They are late as often as single fathers are. What differs is how much of their credit line is in use, and how little they have to fall back on if something happens. Following the same households a year later, what a household says about its own chances of missing a payment predicts what happens to it, over and above the score a lender would read. The project ends somewhere it did not start: on what a credit score leaves out, and on whom it leaves out most.
+An exploratory project on the child penalty in access to credit, using the Survey of Consumer Expectations of the Federal Reserve Bank of New York. It extends my undergraduate thesis at Universidad de Buenos Aires, *Credit Gaps and Motherhood: Unraveling Gender Disparities in Financial Access* (2024), and asks whether mothers report lower credit scores than fathers and than women without children, and where any gap of that kind comes from.
 
-An exploratory project on the child penalty in access to credit, using the Survey of Consumer Expectations of the Federal Reserve Bank of New York. It extends my undergraduate thesis at Universidad de Buenos Aires, *Credit Gaps and Motherhood: Unraveling Gender Disparities in Financial Access* (2024).
+Mothers raising children alone do report lower scores than fathers in the same situation, and the gap is not in their payment record: they are late as often as single fathers are. What differs is how much of their credit line is in use, and how little they have to fall back on if something happens. Following the same households a year later, what a household says about its own chances of missing a payment predicts what happens to it, over and above the score a lender would read. The project ends somewhere it did not start: on what a credit score leaves out, and on whom it leaves out most.
 
 Started in January 2025 and parked while I finish my M.A. thesis. Where it was heading when it stopped is in [docs/a_paper_from_this.md](docs/a_paper_from_this.md).
 
@@ -10,7 +10,7 @@ Started in January 2025 and parked while I finish my M.A. thesis. Where it was h
 
 The child penalty in the labor market is well documented. Much less is known about credit, even though a credit score decides whether a household can borrow, and at what price, to smooth spending on health, education and housing, which is when children make borrowing most valuable.
 
-The project started by asking whether mothers report lower scores than fathers and than women without children, and whether a partner offsets the difference. What changed the question is where the gap turns out to sit. A score is built mostly from two things, the record of past payments and the share of the available limit in use, and the gap is not in the first of them. So the working hypothesis is now about revolving use rather than default: motherhood does not seem to push households into missing payments, it pushes them into carrying a balance they do not pay down. Motivation, hypotheses and literature are in [docs/project_outline.md](docs/project_outline.md).
+What changed the question is where the gap turns out to sit. A score is built mostly from two things, the record of past payments and the share of the available limit in use, and the gap is not in the first of them. So the working hypothesis is now about revolving use rather than default: motherhood does not seem to push households into missing payments, it pushes them into carrying a balance they do not pay down. Motivation, hypotheses and literature are in [docs/project_outline.md](docs/project_outline.md).
 
 ## Data
 
