@@ -1,6 +1,8 @@
 # Credit scores, gender and motherhood
 
-An exploratory project on the child penalty in access to credit, using the Survey of Consumer Expectations of the Federal Reserve Bank of New York. It extends my undergraduate thesis at Universidad de Buenos Aires, *Credit Gaps and Motherhood: Unraveling Gender Disparities in Financial Access* (2024). The project is on hold while I finish my M.A. thesis; what is here is a clean version of the data work, a set of descriptive regressions, and a first attempt at locating the gap inside the credit file.
+An exploratory project on the child penalty in access to credit, using the Survey of Consumer Expectations of the Federal Reserve Bank of New York. It extends my undergraduate thesis at Universidad de Buenos Aires, *Credit Gaps and Motherhood: Unraveling Gender Disparities in Financial Access* (2024).
+
+Started in January 2025 and parked while I finish my M.A. thesis, to be picked up when there is time for it. What is here is a clean version of the data work, a set of descriptive regressions, and an attempt at locating the gap inside the credit file. It ran into a question that is not about motherhood, which is written up in [docs/a_paper_from_this.md](docs/a_paper_from_this.md) so that it is still there when I come back to it.
 
 ## Question
 
@@ -120,9 +122,11 @@ code/
   04_regressions.R       regression tables (markdown and LaTeX), weighted
   05_mechanism.R         payment history against balances: where the gap sits
   06_credit_constraints.R what is rationed, and what the household can fall back on
+  07_information.R       what a household knows that its score does not
   utils.R                table helpers
 data/README.md           how to obtain the microdata
-docs/project_outline.md  motivation, hypotheses, literature
+docs/project_outline.md  motivation, hypotheses and literature, from January 2025
+docs/a_paper_from_this.md  the question the project ran into, and what it would need
 output/                  tables and figures produced by the code
 ```
 
