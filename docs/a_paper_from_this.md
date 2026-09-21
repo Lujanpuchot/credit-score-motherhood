@@ -124,9 +124,6 @@ What each one is for:
   quantity the argument is about. It also asks why someone was turned down and
   why they did not apply.
 
-None of them observes a birth, so none of them makes the motherhood question
-causal. For that it is still a credit bureau panel.
-
 ## What does not work
 
 - Anything causal about motherhood. Family structure is chosen, and this survey
@@ -134,3 +131,51 @@ causal. For that it is still a credit bureau panel.
 - The Medicaid expansion as a design. The state identifier is there, but the
   cells by state, year and family type are far too small.
 - A utilization ratio. The survey asks for balances and never for limits.
+
+## What to get, in the order worth getting it
+
+None of this is on my machine. All of it is public and free, and the links
+were checked in September 2026.
+
+**1. The 2020-2024 core microdata of this survey.** The only item here that
+improves work already written. The credit module on hand already runs to 2023
+and the sample stops in 2019 because the core files stop there, so roughly half
+of what has already been downloaded is sitting unused. The file is
+`frbny-sce-public-microdata-20-24.xlsx` on
+<https://www.newyorkfed.org/microeconomics/sce>; adding it is one more name in
+`FILES_RAW` and one more argument to the `bind_rows` in `01_build_sample.R`. It
+is worth about half a sample again, which is what the thin cells need. The
+Credit Access and Household Spending files are served under a fixed name and
+gain waves over time, so the copies on hand are probably behind as well.
+
+**2. The NFCS**, the FINRA Foundation's National Financial Capability Study, at
+<https://finrafoundation.org/data-and-downloads>. Six waves between 2009 and
+2024, over 25,000 adults in each, representative by state, a flat file with no
+imputation. Its credit card battery separates being charged a late fee from
+being charged a fee for exceeding the credit line, which is the distinction the
+whole argument turns on and is better measured there than here, and it asks the
+$2,000 question. Its measure of standing is a self-rated credit record rather
+than a score band, which is a real difference and would have to be argued. Use
+it to find out whether the cross-sectional results in the README survive a
+sample twenty times larger.
+
+**3. The SCF**, the Federal Reserve Board's Survey of Consumer Finances, at
+<https://www.federalreserve.gov/econres/scfindex.htm>. Triennial, about 6,500
+households, with a heavy oversample of the wealthy. It is the only one of the
+three that records the credit limit on bank cards next to the balance, so it is
+the only one where utilization is measured rather than inferred, and it asks
+why a household was turned down and why it did not apply. It is also the
+hardest to use: the public file carries five implicates per household from
+multiple imputation, so estimates have to be run on each and combined, and
+standard errors come from replicate weights. Budget time for that before
+starting.
+
+**Also unused, and already free.** This survey has five modules and only two of
+them are in `data/raw`. The Housing Survey would speak to the mortgage margin,
+where mothers raising children alone apply least and report the most unmet
+need. The Labor Market Survey carries actual earnings and job transitions,
+which is the link to the labor market child penalty that the README currently
+asserts and cannot show. The Public Policy Survey I have not looked at.
+
+None of these observes a birth, so none of them makes the motherhood question
+causal. For that it is still a credit bureau panel.
