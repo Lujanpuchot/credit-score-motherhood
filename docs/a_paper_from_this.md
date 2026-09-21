@@ -83,22 +83,49 @@ sample rather than the cells that are thin.
   publishes a 2020 to 2024 core file. Adding it is a download and one line in
   `00_config.R`, and it is worth roughly half a sample again, which is also what
   the thin cells need.
-- **A second survey to repeat it on.** The result is one survey and 2,812 pairs.
-  The FINRA Foundation's National Financial Capability Study is the obvious
-  place to look next: six waves between 2009 and 2024, over 25,000 respondents
-  in each, free to download, and built around self-reported financial capability
-  rather than around expectations. It is a repeated cross-section, so it cannot
-  do the panel test above, but if it carries a self-reported score and a
-  question on raising money at short notice, it can say whether the
-  cross-sectional facts in the README hold outside this survey, and it has the
-  sample size the thin cells here do not. Read its questionnaire before
-  assuming any of that.
+- **A second survey to repeat it on**, and a third for the ratio. See below.
 - **Something with an actual score.** Everything here is a self-reported band.
   The measurement-error check above is a defense, not a solution.
 - **A reason for the beliefs.** The paper says households hold information the
   score omits. It does not say what the information is. The buffer is one
   candidate and the survey has it; expected income and job loss are two more and
   the core survey has those too.
+
+## Where else this can be looked at
+
+Read from the questionnaires of each survey in September 2026, not from a
+paper that uses them. The three do different jobs and none of them replaces
+this one.
+
+| | SCE (used here) | NFCS | SCF |
+|:---|:---|:---|:---|
+| Credit standing | Score in five bands (`N22`) | Self-rated credit record, five points, very bad to very good (`J32`); not a score | Not asked |
+| Use of the limit | Reached the limit of a card, yes or no (`N3`) | Charged an over-the-limit fee for exceeding the credit line (`F2_5`); also carried a balance and was charged interest (`F2_2`), and paid the minimum only (`F2_3`) | **Credit limit and balance on bank cards**, so an actual ratio |
+| Missed payments | Late by 30 and by 90 days (`N15`, `N16`) | Charged a late fee (`F2_4`) | Whether the bill is usually paid off each month |
+| Buffer | Percent chance of needing and of raising $2,000 (`N24`, `N25`) | Confidence of raising $2,000, four points (`J20`), and where the money would come from (`J60`) | Not directly |
+| Credit wanted and not applied for | By kind of credit (`N6`, `N7`) | Not checked | Reasons for being turned down, and reasons for not applying |
+| Household | Children by age band, partner, gender | Financially dependent children (`A11`), partner status (`A7a`), gender | Children under 18 in the household, marital history |
+| Design | Panel, respondents seen up to twelve months | Repeated cross-section, six waves 2009 to 2024 | Repeated cross-section, triennial |
+| Size | 11,393 person-years | Over 25,000 per wave | About 6,500 households per wave |
+
+What each one is for:
+
+- **The SCE is the only one that can do the panel test**, and the only one that
+  has a credit score and the household's own expectations on the same person.
+  Nothing below replaces it.
+- **The NFCS is for power.** Its credit card battery separates a late fee from
+  an over-the-limit fee, which is the distinction the whole argument rests on,
+  and it asks the $2,000 question. Its outcome is a self-rated credit record
+  rather than a score, which is a real difference and would have to be
+  discussed. With more than 25,000 respondents a wave, the cells that are thin
+  here stop being thin.
+- **The SCF is for the denominator.** It records the credit limit on bank cards
+  alongside the balance, which is the one thing this survey never asks and the
+  quantity the argument is about. It also asks why someone was turned down and
+  why they did not apply.
+
+None of them observes a birth, so none of them makes the motherhood question
+causal. For that it is still a credit bureau panel.
 
 ## What does not work
 
