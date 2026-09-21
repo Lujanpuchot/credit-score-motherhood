@@ -47,6 +47,22 @@ sample <- sample %>%
     ),
     family_type = relevel(factor(family_type), ref = "No children"),
 
+    # Credit file, as opposed to payment behavior. Reaching the limit of a card
+    # is the survey's closest measure of utilization, which weighs about as much
+    # in a score as payment history does. It is asked of cardholders only, so
+    # has_card is the margin that comes before it.
+    has_card  = as.integer(has_card),
+    maxed_out = as.integer(maxed_out),
+
+    # Applied for any of the seven kinds of credit the module asks about. How the
+    # request ended is not asked about refinancing, so an application with no
+    # answer on that side is left missing rather than counted as not rejected.
+    applied       = as.integer(rowSums(across(starts_with("N4_"), ~ .x == 1), na.rm = TRUE) > 0),
+    outcome_known = rowSums(!is.na(across(starts_with("N9_")))) > 0,
+    rejected      = if_else(applied == 1 & outcome_known,
+                            as.integer(rowSums(across(starts_with("N9_"), ~ .x == 3), na.rm = TRUE) > 0),
+                            NA_integer_),
+
     # Survey weight. The sample is defined by answering the credit module, so
     # that module's weight is the one that makes it representative.
     w = weight_credit,

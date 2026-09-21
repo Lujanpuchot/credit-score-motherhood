@@ -1,10 +1,16 @@
 # Credit scores, gender and motherhood
 
-An exploratory project on the child penalty in access to credit, using the Survey of Consumer Expectations of the Federal Reserve Bank of New York. It extends my undergraduate thesis at Universidad de Buenos Aires, *Credit Gaps and Motherhood: Unraveling Gender Disparities in Financial Access* (2024). The project is on hold while I finish my M.A. thesis; what is here is a clean version of the data work and a first set of descriptive regressions.
+An exploratory project on the child penalty in access to credit, using the Survey of Consumer Expectations of the Federal Reserve Bank of New York. It extends my undergraduate thesis at Universidad de Buenos Aires, *Credit Gaps and Motherhood: Unraveling Gender Disparities in Financial Access* (2024). The project is on hold while I finish my M.A. thesis; what is here is a clean version of the data work, a set of descriptive regressions, and a first attempt at locating the gap inside the credit file.
 
 ## Question
 
-The child penalty in the labor market is well documented. Much less is known about credit, even though a credit score determines whether a household can borrow, and at what price, to smooth spending on health, education and housing, which is when children make borrowing most valuable. I ask whether mothers report lower credit scores than fathers and than women without children, whether living with a partner offsets the difference, and whether the pattern varies by race. Motivation, hypotheses and related literature are in [docs/project_outline.md](docs/project_outline.md).
+The child penalty in the labor market is well documented. Much less is known about credit, even though a credit score determines whether a household can borrow, and at what price, to smooth spending on health, education and housing, which is when children make borrowing most valuable.
+
+The project started from a simple comparison: whether mothers report lower scores than fathers and than women without children, and whether living with a partner offsets the difference. The answer to the first is yes, and the gap between a mother and a father raising children alone survives income, homeownership, education, employment, race, state and year.
+
+What changed the question is where that gap turns out to sit. A credit score is built mostly out of two things, the record of past payments and the share of the available limit that is being used, and the gap is not in the first of them. Mothers and fathers raising children alone miss payments at almost the same rate, and the difference between them is nearly twice as large among the respondents who paid everything on time. It is the second component that moves: among people servicing their debt without a late payment, mothers are far more likely to be at the limit of a credit card, and that one variable absorbs a third of the score gap.
+
+So the working hypothesis is now about revolving use rather than default. Motherhood does not seem to push households into missing payments; it pushes them into carrying a balance they do not pay down. Motivation, hypotheses and related literature are in [docs/project_outline.md](docs/project_outline.md).
 
 ## Data
 
@@ -42,6 +48,22 @@ An ordered logit, which estimates the cut points instead of assuming the bands a
 
 Among parents, neither the number of children nor the age of the youngest moves the score. A second child is worth -0.008 of a band (standard error 0.034) and having the youngest under six is worth 0.039 (0.093), both indistinguishable from zero, and neither interacts with gender ([reg_children_dose](output/tables/reg_children_dose.md)). The penalty attaches to being a mother, not to how many children there are or how much care they currently need. Among parents alone the gender gap is 0.39 of a band, larger than in the full sample.
 
+### Where the gap comes from
+
+Nothing above looks like a household that is simply short of money this month: the gap does not grow with the number of children and does not grow when the youngest is a toddler. [05_mechanism.R](code/05_mechanism.R) splits it the way a score is built instead.
+
+![Credit score by family type, split by whether the respondent missed a payment](output/figures/gap_by_delinquency.png)
+
+**Missed payments are not the channel.** Mothers and fathers raising children alone are late on a loan payment at almost the same rate, 20.9% and 21.1%, against 5.3% among respondents without children, and yet they report very different scores. If the gap ran through payment history it should close among the respondents who paid everything on time. It widens. Restricted to them, a mother raising children alone reports 0.663 of a band less than a father doing the same (standard error 0.183, p < 0.001), against 0.373 in the whole sample ([mech_delinquency](output/tables/mech_delinquency.md), [mech_gap_clean_payers](output/tables/mech_gap_clean_payers.md)).
+
+**The balance carried is.** Among cardholders who paid on time, 35.5% of mothers raising children alone had hit the limit of a credit card during the year, against 14.1% of respondents without children and 7.2% of fathers raising children alone. With income, homeownership, education, employment, race, state and year held fixed the difference is 10 percentage points (standard error 0.040). It is not about having a card in the first place: with the same controls, mothers raising children alone are no less likely to hold one ([mech_at_limit](output/tables/mech_at_limit.md)).
+
+Putting that single variable into the score regression absorbs a third of the gap, from 0.609 to 0.409 of a band for mothers alone and from 0.441 to 0.338 for mothers with a partner ([mech_absorbed](output/tables/mech_absorbed.md)). That is accounting and not identification. Being at the limit is an outcome, so the regression only says how much of the gap sits in that component of the file, not what put it there.
+
+**Not the application stage.** Mothers raising children alone apply for credit more often than respondents without children, by 9.6 percentage points, and are no more likely to be rejected once they do ([mech_access](output/tables/mech_access.md)). The gap is in the terms of the credit they already carry rather than in being turned away at the door. The one result that does not fit is that fathers raising children alone are rejected more often, by 14.7 percentage points, although they are the least likely to be at their limit. There are 110 person-years in that cell and 81 of them paid on time, so every number here that involves fathers alone is suggestive at best.
+
+**What this points to.** The two components leave different kinds of mark. A missed payment records something that went wrong, and it ages off the file. A high balance against the limit is mechanical and contemporaneous: it lowers the score while the balance is there, the lower score raises the price of credit and lowers the limit, and a lower limit raises the ratio again at the same balance. The penalty lasts as long as the borrowing does, without anything having gone wrong. It is also what one would expect if the labor market child penalty is what drives this, since earnings fall and become less predictable around a birth, at the point when spending on health, housing and childcare is least postponable, and the card is what absorbs the difference.
+
 ### Race
 
 Black respondents report scores between 0.6 and 0.95 of a band lower than the rest, depending on the controls, with a further and less precisely estimated difference for Black women ([reg_race](output/tables/reg_race.md)).
@@ -50,8 +72,18 @@ Black respondents report scores between 0.6 and 0.95 of a band lower than the re
 
 These are associations. The score is self-reported in bands, household composition is measured at each respondent's first interview and carried forward, and fertility and partnership are choices correlated with many things that also move credit histories. Nothing here identifies the effect of having a child.
 
+## What this would add
+
+The child penalty in earnings and employment is well measured. Gender differences in credit have been studied mostly on the extensive margin, on who is approved, at what limit and at what rate, and the credit score itself has been studied mainly for what it does to people, in employment screening and in insurance pricing, and for the racial gaps in it. The gap between what a mother and a father with the same household earn is documented; the gap between what their credit files look like is not.
+
+Three things would be new. The first is measuring the child penalty in the credit record rather than in earnings: earnings recover in part after a birth, while a credit file is a stock, so the same shock is carried forward into the price of future borrowing long after the earnings dip has closed. The second is splitting the gap into the components a score is built from, because a penalty for failing to pay and a penalty for borrowing are different objects with different remedies: rules that age derogatory marks off a file do nothing about the second, while a higher limit does. The third is the comparison between mothers and fathers raising children alone, which holds the household structure fixed and varies the gender of the parent, and is a cleaner comparison than the usual one between people with and without children.
+
+Doing this properly needs better data than a self-reported band and a yes or no about hitting a limit. The natural next step is a credit bureau panel, where the balance and the limit are both observed and the components of the file can be seen directly, with an event study around a first birth. What the SCE can do is say what to look for.
+
 ## Next steps
 
+- A continuous measure of how much of the limit is used. The module asks for credit card balances but never for the limit, so what is here is an indicator for having reached it; balance against income is the closest alternative inside the survey.
+- Discouraged borrowing: the module also asks about credit the respondent needed but did not apply for because they expected to be refused, which is the natural complement to the application and rejection results.
 - Survey-design standard errors: the weights are used but the panel structure is handled by clustering, not by the survey design.
 - The Medicaid expansion of 2014 as a source of variation in the financial cost of health shocks: compare the gaps in expansion and non-expansion states before and after (the state identifier is already in the sample).
 - The Household Spending module of the SCE, to look at medical and education spending by family type.
@@ -65,6 +97,7 @@ code/
   02_analysis_sample.R   sample restriction and variable construction
   03_descriptives.R      summary table and figure
   04_regressions.R       regression tables (markdown and LaTeX), weighted
+  05_mechanism.R         payment history against balances: where the gap sits
   utils.R                table helpers
 data/README.md           how to obtain the microdata
 docs/project_outline.md  motivation, hypotheses, literature

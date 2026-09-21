@@ -1,6 +1,6 @@
 # The child penalty in the credit market: project outline
 
-Working outline, January 2025. It records the motivation, the hypotheses and the reading list the project started from.
+Working outline, January 2025. It records the motivation, the hypotheses and the reading list the project started from. The hypothesis has moved since; the section at the end says how, and the results are in the README.
 
 ## Motivation
 
@@ -60,3 +60,19 @@ Family, fertility and credit
 - Chiappori and Lewbel (2024), "Gary Becker's 'A Theory of the Allocation of Time' Revisited".
 - Pitt and Khandker (1998), "The Impact of Group-Based Credit Programs on Poor Households in Bangladesh: Does the Gender of Participants Matter?".
 - Berger, "Giving Women Credit: The Strengths and Limitations of Credit as a Tool for Alleviating Poverty".
+
+The child penalty in the labor market
+
+- Kleven, Landais and Sogaard (2019), "Children and Gender Inequality: Evidence from Denmark". The event study around a first birth that the credit version of this question would want to imitate.
+- Kleven, Landais, Posch, Steinhauer and Zweimuller (2019), "Child Penalties across Countries: Evidence and Explanations".
+- Adda, Dustmann and Stevens (2017), "The Career Costs of Children".
+
+## Where it stands now
+
+September 2026. The first four hypotheses were tested and the results are in the README. The gap between a mother and a father raising children alone is there and survives the controls. The second hypothesis, that a partner attenuates it, does not survive them: what looks like the effect of a partner is mostly the income and the home that come with one.
+
+What was not anticipated is where the gap sits. The original hypotheses treat the score as a summary of whether a household is currently able to meet its obligations, which would show up as missed payments. It does not. Mothers and fathers raising children alone miss payments at the same rate, and the gap between them is larger among the respondents who paid everything on time. It is the balance carried against the limit that differs, and it absorbs a third of the gap.
+
+That changes what the project is about. A penalty for failing to pay and a penalty for borrowing are different objects: the first is a record of a past event and ages off the file, the second is mechanical and lasts as long as the borrowing does, and it feeds on itself because a lower score means a lower limit and a lower limit means a higher ratio at the same balance. The natural reading is that motherhood does not push households into default, it pushes them into persistent revolving use, which is what one would expect if the labor market child penalty arrives exactly when spending is least postponable.
+
+The fifth hypothesis, on the Medicaid expansion, is untouched and now has a sharper prediction attached to it: if the mechanism is the balance rather than the missed payment, the expansion should show up in how much of the limit is used before it shows up in delinquency.

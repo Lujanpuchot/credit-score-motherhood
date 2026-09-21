@@ -59,8 +59,12 @@ credit_year <- credit %>%
          weight_credit      = weight,   # survey weight of the credit module, the one this sample is defined by
          credit_score_band  = N22,   # 1 below 620 ... 5 above 760, 6 don't know
          score_last_checked = N23,
-         late_30_days       = N15,
-         late_90_days       = N16)
+         late_30_days       = N15,   # asked of respondents with at least one debt product
+         late_90_days       = N16,
+         has_card           = N1_1,  # holds at least one credit card
+         maxed_out          = N3,    # reached the limit of a card, asked of cardholders
+         starts_with("N4_"),         # applied for each kind of credit
+         starts_with("N9_"))         # and how the request ended, for the first five
 
 # Background questions ----
 
