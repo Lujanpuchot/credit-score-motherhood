@@ -97,6 +97,8 @@ setFixest_dict(c(
   discretionary_share = "Recreation and other, % of spending",
   committed_share = "Housing, utilities and food, % of spending",
   income_variable = "Income varies month to month", card_balance = "Card balance ($)",
+  miss_payment_chance = "Chance of missing a payment", numeracy = "Numeracy, 0 to 6",
+  risk_tolerance = "Financial risk tolerance", maxed_out = "Reached the card limit",
   expect_card = "Expects a card to be granted", expect_limit = "Expects an increase to be granted",
   income_bracket = "Household income bracket", age = "Age", owner = "Homeowner",
   hispanic = "Hispanic", race_black = "Black", credit_score_band = "Credit score band",
@@ -195,7 +197,35 @@ save_table(list(
             ..c = controls), sample, weights = ~w)
 ), "con_expectations")
 
-# 5. Figure ----
+# 5. What they expect of themselves ----
+
+# The core survey asks everyone, every month, for the percent chance that they
+# will not be able to make one of their debt payments over the next three
+# months. Read against what actually happens to them it is a second reading of
+# the same household, and it behaves differently from the expectation of being
+# approved: that one lines up with the score band, this one does not.
+
+cat("\nExpected chance of missing a payment, against the share who were late:\n")
+print(as.data.frame(sample %>% group_by(family_type) %>%
+  summarise(expects = wmean(miss_payment_chance, w), was_late = wmean(late_30_days, w),
+            n = sum(!is.na(miss_payment_chance)), .groups = "drop")),
+  row.names = FALSE, digits = 3)
+
+# Column 3 asks whether numeracy and willingness to take financial risks explain
+# any of this, and column 4 puts them into the utilization regression, which is
+# the result the rest of the argument rests on.
+save_table(list(
+  feols(xpd(miss_payment_chance ~ family_type + income_bracket + ..c | state + year, ..c = controls),
+        sample, weights = ~w),
+  feols(xpd(miss_payment_chance ~ family_type + i(credit_score_band) + income_bracket + ..c |
+              state + year, ..c = controls), sample, weights = ~w),
+  feols(xpd(miss_payment_chance ~ family_type + i(credit_score_band) + numeracy + risk_tolerance +
+              income_bracket + ..c | state + year, ..c = controls), sample, weights = ~w),
+  feols(xpd(maxed_out ~ family_type + numeracy + risk_tolerance + income_bracket + ..c |
+              state + year, ..c = controls), filter(sample, late_30_days == 0), weights = ~w)
+), "con_own_risk")
+
+# 6. Figure ----
 
 # The question the figure answers is whether the credit a group is refused is
 # the credit it says it needs. Mothers raising children alone against

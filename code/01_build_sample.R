@@ -49,7 +49,18 @@ core_year <- core %>%
   last_of_year() %>%
   select(userid, year, month, weight,
          starts_with("Q10_"),              # employment situation (multiple answers)
+         miss_payment_chance = Q30new,     # percent chance of missing a debt payment in 3 months
          region = `_REGION_CAT`)
+
+# Numeracy and willingness to take financial risks are put only to respondents
+# who are new to the panel, and the question on who makes the household's
+# financial decisions rotates, so none of them is guaranteed to sit on the first
+# record. The first answer each respondent gives is the one kept.
+asked_once <- core %>%
+  arrange(userid, date) %>%
+  group_by(userid) %>%
+  summarise(across(c(QNUM1, QNUM2, QNUM3, QNUM5, QNUM6, QNUM8, QRA1, Q46),
+                   ~ .x[!is.na(.x)][1]), .groups = "drop")
 
 credit_year <- credit %>%
   add_year() %>%
@@ -119,6 +130,7 @@ person_year <- core_year %>%
   left_join(credit_year,   by = c("userid", "year")) %>%
   left_join(spending_year, by = c("userid", "year")) %>%
   left_join(background,    by = "userid") %>%
+  left_join(asked_once,    by = "userid") %>%
   rename(emp_full_time = Q10_1, emp_part_time = Q10_2, emp_looking  = Q10_3,
          emp_laid_off  = Q10_4, emp_on_leave  = Q10_5, emp_disabled = Q10_6,
          emp_retired   = Q10_7, emp_student   = Q10_8, emp_homemaker = Q10_9,

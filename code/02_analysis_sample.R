@@ -63,6 +63,14 @@ sample <- sample %>%
                             as.integer(rowSums(across(starts_with("N9_"), ~ .x == 3), na.rm = TRUE) > 0),
                             NA_integer_),
 
+    # Five arithmetic questions and one on the real interest rate, scored as the
+    # number of correct answers. They are asked as a block, so a respondent who
+    # left any of them blank is left missing rather than counted as wrong.
+    numeracy = (QNUM1 == 150) + (QNUM2 == 242) + (QNUM3 == 10) +
+               (QNUM5 == 100) + (QNUM6 == 5) + (QNUM8 == 3),
+    risk_tolerance = QRA1,                     # 1 not willing at all to 7 very willing
+    decides_alone  = as.integer(Q46 >= 4),     # makes all of the household's financial decisions
+
     # What the monthly budget is committed to. Housing, utilities and food are
     # what a household cannot postpone when something happens; recreation and
     # the miscellaneous category are what it can.
