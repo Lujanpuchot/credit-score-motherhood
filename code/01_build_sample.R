@@ -62,9 +62,31 @@ credit_year <- credit %>%
          late_30_days       = N15,   # asked of respondents with at least one debt product
          late_90_days       = N16,
          has_card           = N1_1,  # holds at least one credit card
+         card_balance       = N2_1,  # dollars owed on cards, asked of cardholders
          maxed_out          = N3,    # reached the limit of a card, asked of cardholders
          starts_with("N4_"),         # applied for each kind of credit
-         starts_with("N9_"))         # and how the request ended, for the first five
+         starts_with("N6_"),         # needed it and did not apply, expecting a refusal
+         starts_with("N7_"),         # the same question in its other format
+         starts_with("N9_"),         # and how the request ended, for the first five
+         refinance_granted  = N11,   # refinancing is followed up here and not in N9
+         starts_with("N14_"),        # accounts closed and limits cut during the year
+         expect_card   = N21_1,      # percent chance a new card would be granted
+         expect_limit  = N21_4,      # percent chance a limit increase would be granted
+         need_2000     = N24,        # percent chance of needing $2,000 unexpectedly
+         raise_2000    = N25)        # percent chance of being able to come up with it
+
+# Household spending module ----
+
+# Fielded three times a year, so the same rule applies. It is the only place with
+# the composition of monthly spending and with how variable the household's
+# income is; neither is in the core survey or in the credit module.
+spending_year <- read_sce(FILES_RAW[["spending"]], sheet = "Data") %>%
+  add_year() %>%
+  last_of_year() %>%
+  select(userid, year,
+         starts_with("qsp5_"),            # share of monthly spending by category
+         income_variability = qsp14new,   # 1 constant to 4 highly variable
+         income_range       = qsp15new)   # 1 under 5%, 2 between 5 and 15%, 3 over 15%
 
 # Background questions ----
 
@@ -94,8 +116,9 @@ background <- core %>%
 # Merge and save ----
 
 person_year <- core_year %>%
-  left_join(credit_year, by = c("userid", "year")) %>%
-  left_join(background,  by = "userid") %>%
+  left_join(credit_year,   by = c("userid", "year")) %>%
+  left_join(spending_year, by = c("userid", "year")) %>%
+  left_join(background,    by = "userid") %>%
   rename(emp_full_time = Q10_1, emp_part_time = Q10_2, emp_looking  = Q10_3,
          emp_laid_off  = Q10_4, emp_on_leave  = Q10_5, emp_disabled = Q10_6,
          emp_retired   = Q10_7, emp_student   = Q10_8, emp_homemaker = Q10_9,
@@ -108,5 +131,6 @@ stopifnot(nrow(person_year) == nrow(core_year))
 cat("Person-years:", nrow(person_year), "\n")
 cat("Respondents: ", n_distinct(person_year$userid), "\n")
 cat("With a credit module interview in the year:", sum(!is.na(person_year$month_credit)), "\n")
+cat("With a spending module interview in the year:", sum(!is.na(person_year$qsp5_1)), "\n")
 
 saveRDS(person_year, file.path(DIR_DERIVED, "sce_person_year.rds"))

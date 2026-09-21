@@ -64,6 +64,24 @@ Putting that single variable into the score regression absorbs a third of the ga
 
 **What this points to.** The two components leave different kinds of mark. A missed payment records something that went wrong, and it ages off the file. A high balance against the limit is mechanical and contemporaneous: it lowers the score while the balance is there, the lower score raises the price of credit and lowers the limit, and a lower limit raises the ratio again at the same balance. The penalty lasts as long as the borrowing does, without anything having gone wrong. It is also what one would expect if the labor market child penalty is what drives this, since earnings fall around a birth at the point when spending on housing and childcare is least postponable, and the card is what absorbs the difference.
 
+### What is rationed, and what there is to fall back on
+
+Utilization is a ratio and none of the above says which side of it moves. The survey never asks for the credit limit, so the denominator cannot be measured, but three things around it can ([06_credit_constraints.R](code/06_credit_constraints.R)).
+
+**Where the ceiling is.** Among cardholders who paid on time, the median balance of someone who reports having reached the limit is $5,000 for a mother raising children alone, $8,000 for a respondent without children and $15,500 for a partnered father ([con_balance](output/tables/con_balance.md)). Hitting the ceiling while owing less is what a lower ceiling looks like.
+
+**Credit that is needed and never asked for.** For each kind of credit the module asks not only whether the respondent applied and how it ended, but whether they needed it and did not apply because they expected to be turned down. On that second question mothers raising children alone are above respondents without children for all seven kinds: 35% against 14% for a credit card, 20% against 9% for an increase in a card limit, 15% against 6% for a mortgage ([con_rationing](output/tables/con_rationing.md)). They also ask for a limit increase more than twice as often, 25% against 11%, and are refused 44% of the time against 28%.
+
+![Credit needed and never asked for, and credit refused, by kind of credit](output/figures/rationing.png)
+
+Most of that is income. With the usual controls only the asking survives at anything like conventional levels, and the refusal gap disappears; the cells that carry the refusal rates hold between 30 and 200 people ([con_card_margin](output/tables/con_card_margin.md)). Read it as a description of who is constrained, not as evidence that lenders treat them differently at the same income.
+
+**What the household has to fall back on.** This is the part that survives. Respondents give the percent chance of needing $2,000 for an unexpected expense in the next month, and the percent chance of being able to come up with it. Mothers raising children alone put the first at 30.5%, the lowest of any family type, and the second at 38.9%, against 72.6% for respondents without children. With income, homeownership, education, employment, race, state and year held fixed, the gap in being able to raise the money is 9.5 points for mothers alone and 9.9 for mothers with a partner, both precisely estimated, while the gap in expecting to need it is zero ([con_buffer](output/tables/con_buffer.md)). At the same income they also spend about 2 points less of their budget on recreation and the miscellaneous category, and their income is no more variable from month to month than anyone else's.
+
+The same exposure to a shock, half the capacity to absorb one, and less left over to cut. The card is what remains, which is a reason for a balance that does not come down.
+
+**The pessimism is warranted.** Respondents also give the percent chance that a request of theirs would be granted. Raw, mothers raising children alone put a new card application at 48% against 77% for respondents without children. Holding the score band they report fixed, the difference is -1.2 (2.9) for a card and +2.6 (3.3) for a limit increase ([con_expectations](output/tables/con_expectations.md)). Their expectations track their own record, so what looks like discouragement is an accurate reading of a low score rather than something added on top of it. Mothers with a partner are the exception: they stay 4.6 points below what their band implies.
+
 ### Race
 
 Black respondents report scores between 0.6 and 0.95 of a band lower than the rest, depending on the controls, with a further and less precisely estimated difference for Black women ([reg_race](output/tables/reg_race.md)).
@@ -82,14 +100,10 @@ Doing this properly needs better data than a self-reported band and a yes or no 
 
 ## Next steps
 
-Utilization is a ratio, and nothing so far says which side of it moves. The module has enough to ask, and each of these is a hypothesis rather than a robustness check.
-
-- **The limit rather than the balance.** Balances are recorded, so being at the limit can be held against the amount owed. If the gap survives that, what differs is the size of the line and not the borrowing.
-- **Who is refused more room.** Requests for an increase in a credit card limit are recorded apart from applications for new credit, with how each one ended.
-- **The buffer.** Respondents give the percent chance that they could raise $2,000 for an unexpected expense, and the chance that they would need to. A household with nothing else to draw on is one whose balance does not come down.
-- **Whether it lasts.** A third of respondents are seen in two years, so the same person can be followed from one to the next.
-- **Beliefs.** Respondents also give the percent chance that a request of theirs would be granted, which can be set against what happens to them when they ask.
-- **Policy.** The Medicaid expansion of 2014 as a source of variation in the financial cost of health shocks, with the state identifier already in the sample, and the Household Spending module for medical and education spending by family type.
+- **The limit itself.** Everything above infers it. A credit bureau panel measures it, along with the balance, and turns the indicator for hitting the ceiling into a ratio.
+- **Whether it lasts.** A third of respondents are seen in two years, so the same person can be followed from one to the next: who is still at the limit, and whether a limit cut in one year predicts being at the ceiling in the following one.
+- **The mortgage margin.** Mothers raising children alone apply for a mortgage less often than anyone and report needing one and not asking more often than anyone. Staying out of the market that builds equity is a different penalty from a high card balance, and it is the one with consequences for wealth rather than for the price of credit.
+- **Policy.** The Medicaid expansion of 2014 as a source of variation in the financial cost of health shocks, with the state identifier already in the sample. If the mechanism is the balance and not the missed payment, the expansion should show up in how much of the limit is used before it shows up in delinquency.
 
 ## Repository
 
@@ -101,12 +115,13 @@ code/
   03_descriptives.R      summary table and figure
   04_regressions.R       regression tables (markdown and LaTeX), weighted
   05_mechanism.R         payment history against balances: where the gap sits
+  06_credit_constraints.R what is rationed, and what the household can fall back on
   utils.R                table helpers
 data/README.md           how to obtain the microdata
 docs/project_outline.md  motivation, hypotheses, literature
 output/                  tables and figures produced by the code
 ```
 
-The code runs in R 4.5 with `dplyr`, `tidyr`, `readxl`, `ggplot2`, `fixest`, `MASS` and `sandwich`. Put the three raw files in `data/raw` (or point `SCE_DATA_DIR` to them) and run the scripts in order from the repository root.
+The code runs in R 4.5 with `dplyr`, `tidyr`, `readxl`, `ggplot2`, `fixest`, `MASS` and `sandwich`. Put the four raw files in `data/raw` (or point `SCE_DATA_DIR` to them) and run the scripts in order from the repository root.
 
 María Luján Puchot

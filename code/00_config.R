@@ -17,7 +17,8 @@ for (d in c(DIR_DERIVED, DIR_TABLES, DIR_FIGURES)) {
 FILES_RAW <- c(
   core_2013 = "SCE-Public-Microdata-Complete-2013-2016.xlsx",
   core_2017 = "SCE-Public-Microdata-Complete 2017-2019.xlsx",
-  credit    = "SCE-Credit-Access-complete_microdata.xlsx"
+  credit    = "SCE-Credit-Access-complete_microdata.xlsx",
+  spending  = "Household-Spending- Microdata.xlsx"
 )
 
 missing_files <- FILES_RAW[!file.exists(file.path(DIR_RAW, FILES_RAW))]

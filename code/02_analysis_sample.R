@@ -63,8 +63,17 @@ sample <- sample %>%
                             as.integer(rowSums(across(starts_with("N9_"), ~ .x == 3), na.rm = TRUE) > 0),
                             NA_integer_),
 
+    # What the monthly budget is committed to. Housing, utilities and food are
+    # what a household cannot postpone when something happens; recreation and
+    # the miscellaneous category are what it can.
+    committed_share     = qsp5_1 + qsp5_2 + qsp5_3,
+    discretionary_share = qsp5_7 + qsp5_9,
+    income_variable     = as.integer(income_variability >= 3),
+
     # Survey weight. The sample is defined by answering the credit module, so
-    # that module's weight is the one that makes it representative.
+    # that module's weight is the one that makes it representative. The spending
+    # module has its own weight, which is not in the public file, so the columns
+    # that use spending variables are weighted with this one too.
     w = weight_credit,
 
     # Graduate degrees pooled; "other" left missing.
