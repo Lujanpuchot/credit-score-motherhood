@@ -16,7 +16,7 @@ So the working hypothesis is now about revolving use rather than default. Mother
 
 ## Data
 
-The Survey of Consumer Expectations (SCE) is a monthly rotating panel of about 1,300 U.S. household heads, who stay in the panel for up to twelve months. I use the core survey for 2013-2019 and the Credit Access module, which is fielded every four months and since February 2014 asks respondents for their credit score in five bands: below 620, 620-679, 680-719, 720-760 and above 760. Demographics and household composition come from each respondent's first interview.
+The Survey of Consumer Expectations (SCE) is a monthly rotating panel of about 1,300 U.S. household heads, who stay in the panel for up to twelve months. I use the core survey for 2013-2019, the Credit Access module, which is fielded every four months and since February 2014 asks respondents for their credit score in five bands, below 620, 620-679, 680-719, 720-760 and above 760, and the Household Spending module, which is fielded three times a year and carries the composition of monthly spending. Demographics and household composition come from each respondent's first interview.
 
 The unit of observation is a person-year. The analysis sample has 11,393 observations from 8,580 respondents between 2014 and 2019. The microdata are public but are not redistributed here; [data/README.md](data/README.md) explains how to get them.
 
@@ -84,6 +84,14 @@ The same exposure to a shock, half the capacity to absorb one, and less left ove
 **The pessimism is warranted.** Respondents also give the percent chance that a request of theirs would be granted. Raw, mothers raising children alone put a new card application at 48% against 77% for respondents without children. Holding the score band they report fixed, the difference is -1.2 (2.9) for a card and +2.6 (3.3) for a limit increase ([con_expectations](output/tables/con_expectations.md)). Their expectations track their own record, so what looks like discouragement is an accurate reading of a low score rather than something added on top of it. Mothers with a partner are the exception: they stay 4.6 points below what their band implies.
 
 **What they expect of themselves.** The core survey asks everyone for the percent chance that they will not be able to make one of their debt payments over the next three months. Mothers raising children alone put it at 27.6%, against 14.4% for fathers raising children alone, who were late over the past year at the same rate, 21.1% against 20.9% ([con_own_risk](output/tables/con_own_risk.md)). About half of that gap is the score band they report and the rest is imprecisely estimated, but the two kinds of expectation clearly do not behave alike: what a lender will do with them tracks their record, and what they think will happen to them looks more like the buffer than like the record. Neither numeracy, scored from the arithmetic questions the survey puts to respondents new to the panel, nor willingness to take financial risks accounts for any of this, and putting both into the regression leaves the gap in reaching the card limit where it was.
+
+### What the household knows and the score does not
+
+The panel side of the survey is what none of the above uses. A third of respondents are interviewed in two calendar years, so this year's answers can be set against next year's outcomes ([07_information.R](code/07_information.R)).
+
+Holding the reported band fixed with a full set of dummies, a household's own stated chance of missing a debt payment over the next three months predicts whether it misses one over the following year, 0.0041 per point (standard error 0.0005), and where its band ends up, -0.0037 (0.0009). That one answer takes the R-squared on next year's delinquency from 0.19 to 0.29 ([inf_next_year](output/tables/inf_next_year.md)). It survives holding this year's delinquency and use of the limit fixed, 0.0027 (0.0005), and it survives the obvious objection that a self-reported band is a poor control: among respondents who checked their score within six months the coefficient is 0.0026 (0.0006), against 0.0038 (0.0010) for those whose last look was over a year ago ([inf_measurement](output/tables/inf_measurement.md)). Measurement error inflates this; it does not produce it.
+
+The slope is the same for every family type. What differs is where they sit on the question: mothers raising children alone are 16.8 points higher, which is 4.6 points of next year's delinquency that a lender reading only the score does not see. That is a question about what a credit score leaves out rather than about motherhood, and [docs/a_paper_from_this.md](docs/a_paper_from_this.md) works out what it would take to answer it.
 
 ### Race
 
