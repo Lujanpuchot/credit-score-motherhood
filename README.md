@@ -1,8 +1,10 @@
 # Credit scores, gender and motherhood
 
+Mothers raising children alone report lower credit scores than fathers in the same situation, and the gap is not in their payment record. They are late as often as single fathers are. What differs is how much of their credit line is in use, and how little they have to fall back on if something happens. Following the same households a year later, what a household says about its own chances of missing a payment predicts what happens to it, over and above the score a lender would read. The project ends somewhere it did not start: on what a credit score leaves out, and on whom it leaves out most.
+
 An exploratory project on the child penalty in access to credit, using the Survey of Consumer Expectations of the Federal Reserve Bank of New York. It extends my undergraduate thesis at Universidad de Buenos Aires, *Credit Gaps and Motherhood: Unraveling Gender Disparities in Financial Access* (2024).
 
-Started in January 2025 and parked while I finish my M.A. thesis. It ran into a question that is not about motherhood, written up in [docs/a_paper_from_this.md](docs/a_paper_from_this.md) so that it is still there when I come back to it.
+Started in January 2025 and parked while I finish my M.A. thesis. Where it was heading when it stopped is in [docs/a_paper_from_this.md](docs/a_paper_from_this.md).
 
 ## Question
 
