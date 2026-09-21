@@ -58,9 +58,9 @@ Nothing above looks like a household that is simply short of money this month: t
 
 **The balance carried is.** Among cardholders who paid on time, 35.5% of mothers raising children alone had hit the limit of a credit card during the year, against 14.1% of respondents without children and 7.2% of fathers raising children alone. With income, homeownership, education, employment, race, state and year held fixed the difference is 10 percentage points (standard error 0.040). It is not about having a card in the first place: with the same controls, mothers raising children alone are no less likely to hold one ([mech_at_limit](output/tables/mech_at_limit.md)).
 
-Putting that single variable into the score regression absorbs a third of the gap, from 0.609 to 0.409 of a band for mothers alone and from 0.441 to 0.338 for mothers with a partner ([mech_absorbed](output/tables/mech_absorbed.md)). That is accounting and not identification. Being at the limit is an outcome, so the regression only says how much of the gap sits in that component of the file, not what put it there.
+Putting that single variable into the score regression absorbs a third of the gap, from 0.609 to 0.409 of a band for mothers alone and from 0.441 to 0.338 for mothers with a partner ([mech_absorbed](output/tables/mech_absorbed.md)). Being at the limit is an outcome, so this is accounting: it says where the gap sits, not what put it there.
 
-**Not the application stage.** Mothers raising children alone apply for credit more often than respondents without children, by 9.6 percentage points, and are no more likely to be rejected once they do ([mech_access](output/tables/mech_access.md)). The gap is in the terms of the credit they already carry rather than in being turned away at the door. The one result that does not fit is that fathers raising children alone are rejected more often, by 14.7 percentage points, although they are the least likely to be at their limit. There are 110 person-years in that cell and 81 of them paid on time, so every number here that involves fathers alone is suggestive at best.
+**Not the application stage.** Mothers raising children alone apply for credit more often than respondents without children, by 9.6 percentage points, and are no more likely to be rejected once they do ([mech_access](output/tables/mech_access.md)). The gap is in the terms of the credit they already carry, not in being turned away at the door. Fathers raising children alone are 110 person-years, so every column that involves them is suggestive at best.
 
 **What this points to.** The two components leave different kinds of mark. A missed payment records something that went wrong, and it ages off the file. A high balance against the limit is mechanical and contemporaneous: it lowers the score while the balance is there, the lower score raises the price of credit and lowers the limit, and a lower limit raises the ratio again at the same balance. The penalty lasts as long as the borrowing does, without anything having gone wrong. It is also what one would expect if the labor market child penalty is what drives this, since earnings fall and become less predictable around a birth, at the point when spending on health, housing and childcare is least postponable, and the card is what absorbs the difference.
 
@@ -82,11 +82,14 @@ Doing this properly needs better data than a self-reported band and a yes or no 
 
 ## Next steps
 
-- A continuous measure of how much of the limit is used. The module asks for credit card balances but never for the limit, so what is here is an indicator for having reached it; balance against income is the closest alternative inside the survey.
-- Discouraged borrowing: the module also asks about credit the respondent needed but did not apply for because they expected to be refused, which is the natural complement to the application and rejection results.
-- Survey-design standard errors: the weights are used but the panel structure is handled by clustering, not by the survey design.
-- The Medicaid expansion of 2014 as a source of variation in the financial cost of health shocks: compare the gaps in expansion and non-expansion states before and after (the state identifier is already in the sample).
-- The Household Spending module of the SCE, to look at medical and education spending by family type.
+Utilization is a ratio, and nothing so far says which side of it moves. The module has enough to ask, and each of these is a hypothesis rather than a robustness check.
+
+- **The limit rather than the balance.** Balances are recorded, so being at the limit can be held against the amount owed. If the gap survives that, what differs is the size of the line and not the borrowing.
+- **Who is refused more room.** Requests for an increase in a credit card limit are recorded apart from applications for new credit, with how each one ended.
+- **The buffer.** Respondents give the percent chance that they could raise $2,000 for an unexpected expense, and the chance that they would need to. A household with nothing else to draw on is one whose balance does not come down.
+- **Whether it lasts.** A third of respondents are seen in two years, so the same person can be followed from one to the next.
+- **Beliefs.** Respondents also give the percent chance that a request of theirs would be granted, which can be set against what happens to them when they ask.
+- **Policy.** The Medicaid expansion of 2014 as a source of variation in the financial cost of health shocks, with the state identifier already in the sample, and the Household Spending module for medical and education spending by family type.
 
 ## Repository
 
